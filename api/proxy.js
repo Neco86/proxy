@@ -1,6 +1,6 @@
-const fetch = require("node-fetch");
+import fetch from "node-fetch";
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   const { domain, path } = req.query;
   const targetUrl = `https://${domain}/${path}`;
 
