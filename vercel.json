@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "https://$1"
+      "destination": "https://www.google.com.hk/$1"
     }
   ]
 }
