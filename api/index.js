@@ -1,14 +1,16 @@
 import fetch from "node-fetch";
 
 export default async (req, res) => {
-  const { target, http, ...others } = req.query;
+  const { target, ...others } = req.query;
 
   if (!target) {
     res.send(null);
     return;
   }
 
-  const targetUrl = `http${http ? '' : 's'}://${target}${req.url}?${Object.keys(others).map(key => `${key}=${others[key]}`).join("&")}`;
+  const [path] = req.url.split("?");
+
+  const targetUrl = `https://${target}${path}?${Object.keys(others).map(key => `${key}=${others[key]}`).join("&")}`;
 
   req.headers.host = target;
 
@@ -26,7 +28,7 @@ export default async (req, res) => {
     if (contentType && contentType.includes("text/html")) {
       const modifiedBody = responseBody.replace(
         /<head>/,
-        `<head><base href="http${http ? '' : 's'}://${target}/">`
+        `<head><base href="https://${target}/">`
       );
       res.setHeader("content-type", contentType);
       res.send(modifiedBody);
